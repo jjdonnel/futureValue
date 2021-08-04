@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/main.css">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div class="header">
+        <div class="title">
+            <h1>
+                Calculators
+            </h1>
+        </div>
+    </div>
+
+    <div id="value" class="calcs">
+        <h2 onClick="openValueWindow();">Future Value</h2>
+        <!-- <p>Calculates the future value of an initial investment given a known rate with regular contributions.</p> -->
+        <div class="valueWindow">
+            <h3 id="futureValue"></h3>
+            Present Value $ <input type="text" id="presentValue" placeholder="Present Value"> 
+            <br>
+            <br>
+            Yearly Contribution $ <input type="text" id="contribution" placeholder="Contribution" value="0"> 
+            <br>
+            <br>
+            Expected Return <input type="text" id="interestRate" placeholder="Interest Rate"> %
+            <br>
+            <br>
+            Time <input type="text" id="length" placeholder="lengthofTime"> years
+            <br>
+            <br>
+            <button class="calcButton" onclick="fValCalculator()">Calculate</button>
+            <br>
+
+        </div>
+    </div>
+
+    <script>
+        function fValCalculator() {
+            let nfObject = new Intl.NumberFormat('en-US');
+            let contribution = parseInt(document.getElementById("contribution").value);
+            let presentValue = parseInt(document.getElementById("presentValue").value);
+            let interestRate = parseFloat(document.getElementById("interestRate").value);
+            let length = parseInt(document.getElementById("length").value);
+            let fVal = ((presentValue * (1 + interestRate * 0.01) ** length) + contribution * ((1 + interestRate * 0.01) ** length - 1) / (interestRate*0.01)).toFixed();
+            
+            if(!isNaN(fVal)) {
+                document.getElementById("futureValue").innerHTML = "Your investment will be worth $" + nfObject.format(fVal);
+            }
+        }
+
+        function openValueWindow() {
+            if (document.querySelector(".valueWindow").style.display == "block") {
+                document.querySelector(".valueWindow").style.display = "none";
+            } else {
+                document.querySelector(".valueWindow").style.display = "block";
+                document.querySelector("#value").scrollIntoView();
+                document.querySelector(".valueWindow").style.animationName ="fadeIn"; 
+                document.querySelector(".valueWindow").style.animationDuration = "1s";
+            }
+        }
+
+    </script>
+</body>
+</html>
